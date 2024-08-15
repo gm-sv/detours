@@ -76,7 +76,7 @@ do
 	end
 
 	function DetourGeneric(self, Lookup, Replacement)
-		local Existing, Key, Location = string.ToIndex(Lookup)
+		local Existing, Location, Key = string.ToIndex(Lookup)
 
 		local ReplacementStorageTable = self.m_Replacements[Existing]
 
@@ -89,7 +89,7 @@ do
 	end
 
 	function RestoreGeneric(self, Lookup)
-		local Existing, Key, Location = string.ToIndex(Lookup)
+		local Existing, Location, Key = string.ToIndex(Lookup)
 
 		local OriginalStorageTable = self.m_Originals[Existing]
 
