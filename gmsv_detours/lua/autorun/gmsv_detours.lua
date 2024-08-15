@@ -38,7 +38,7 @@ do
 	end
 
 	function CreateFromKey(self, Location, Key, Replacement)
-		if not istable(Location) or not istable(Key) then
+		if not istable(Location) or not isstring(Key) then
 			return FormatError("Can't find location for detouring: %s", self:FormatLocationKey(Location, Key))
 		end
 
@@ -56,7 +56,7 @@ do
 	end
 
 	function RestoreFromKey(self, Location, Key)
-		if not istable(Location) or not istable(Key) then
+		if not istable(Location) or not isstring(Key) then
 			return FormatError("Can't find location for restoring: %s", self:FormatLocationKey(Location, Key))
 		end
 
