@@ -8,12 +8,23 @@ do
 		return Format("%s[%s]", Location, FormattedKey)
 	end
 
+	function CreateDetourEnvironment(self, Replacement, Original)
+		local Fenv = {} -- TODO: Extra fancy stuff for original's fenv
+		package.seeall(Fenv)
+
+		Fenv.ORIGINAL_FUNCTION = Original
+		Fenv.REPLACEMENT_FUNCTION = Replacement
+
+		return setfenv(Replacement, Fenv)
+	end
+
 	function CreateStorageTable(self, Location, Key, Replacement, Original)
 		return {
 			["Location"] = Location,
 			["Key"] = Key,
 			["Replacement"] = Replacement,
-			["Original"] = Original
+			["Original"] = Original,
+			["Environment"] = self:CreateDetourEnvironment(Replacement, Original)
 		}
 	end
 
@@ -63,7 +74,6 @@ do
 
 		if istable(ReplacementStorageTable) then
 			MsgDev("Attempted to re-detour %s", self:FormatLocationKey(Location, Key))
-
 			return ReplacementStorageTable
 		end
 
@@ -77,7 +87,6 @@ do
 
 		if istable(OriginalStorageTable) then
 			MsgDev("Attempted to re-restore %s", self:FormatLocationKey(Location, Key))
-
 			return
 		end
 
